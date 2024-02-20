@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
     /* code */
     PRODUTO *lista;
     PRODUTO produto;
-    int opcao;
+    int opcao, opcaoVendas, opcaoClientes, opcaoProdutos;
     char msg[50];
     DATA d1, d2;
 
@@ -62,8 +62,71 @@ int main(int argc, char const *argv[])
         opcao = MenuPrincipal();
         switch (opcao)
         {
+        case 1:
+            do
+            {
+                opcaoVendas = MenuVendas();
+                switch (opcaoVendas)
+                {
+                case 1:
+                    printf("Vai abrir função nova venda");
+                    break;
+                case 2:
+                    printf("Vai abrir função lista de vendas do cliente");
+                    break;
+                default:
+                    break;
+                }
+            } while (opcaoVendas !=9);
+            break;
+        case 2:
+            do
+            {
+                opcaoClientes = MenuClientes();
+                switch (opcaoClientes)
+                {
+                case 1:
+                    printf("Vai abrir função castrar novo cliente");
+                    break;
+                case 2:
+                    printf("Vai abrir função atualizar pontuação");
+                    break;
+                case 3:
+                    prinf("Vai abrir função atualizar cliente");
+                case 4:
+                    printf("Vai abrir função listar clientes de 18 a 25");
+                    break;
+                case 5:
+                    printf("Vai abrir função listar clientes acima de 1000 pontos");
+                    break;
+                default:
+                    break;
+                }
+            } while (opcaoClientes != 9);
+            break;
         case 3:
-            lista = (PRODUTO *)malloc(sizeof(PRODUTO) * 10);
+            do
+            {
+                opcaoProdutos = MenuProdutos();
+                switch (opcaoProdutos)
+                {
+                case 1:
+                    printf("Vai abrir função castrar novo produto");
+                    break;
+                case 2:
+                    printf("Vai abrir função atualizar informações de produto");
+                    break;
+                case 3:
+                    prinf("Vai abrir função estoque por setor");
+                case 4:
+                    printf("Vai abrir função produtos com estoque baixo");
+                    break;
+                default:
+                    break;
+                }
+            } while (opcaoProdutos != 9);
+            break;
+            /*lista = (PRODUTO *)malloc(sizeof(PRODUTO) * 10);
             int qtdeProdutos = lerProdutosCSV(lista);
             printf("Quantidade de registros: %d\n", qtdeProdutos);
             for (int i = 0; i < qtdeProdutos; i++)
@@ -81,7 +144,7 @@ int main(int argc, char const *argv[])
             qtdeBin = lerProdutosDAT(lista);
             printf("Quantidade de registros (binário): %d\n", qtdeBin);     
             getchar();  
-            getchar();     
+            getchar();*/    
             break;
         default:
             break;
