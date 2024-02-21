@@ -92,7 +92,7 @@ int main(int argc, char const *argv[])
                     printf("Vai abrir função atualizar pontuação");
                     break;
                 case 3:
-                    prinf("Vai abrir função atualizar cliente");
+                    printf("Vai abrir função atualizar cliente");
                 case 4:
                     printf("Vai abrir função listar clientes de 18 a 25");
                     break;
@@ -117,7 +117,7 @@ int main(int argc, char const *argv[])
                     printf("Vai abrir função atualizar informações de produto");
                     break;
                 case 3:
-                    prinf("Vai abrir função estoque por setor");
+                    printf("Vai abrir função estoque por setor");
                 case 4:
                     printf("Vai abrir função produtos com estoque baixo");
                     break;
