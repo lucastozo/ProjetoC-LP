@@ -109,13 +109,48 @@ int main(int argc, char const *argv[])
             do
             {
                 opcaoProdutos = MenuProdutos();
+                PRODUTO p;
                 switch (opcaoProdutos)
                 {
                 case 1:
-                    printf("Vai abrir função castrar novo produto");
+                    do
+                    {
+                        system("cls");
+                        printf("1. CSV\n2. DAT\nEscolha o formato: ");
+                        int formato;
+                        scanf(" %d", &formato);
+                    } while (opcaoProdutos != 1 && opcaoProdutos != 2);
+                    lerProduto(&p);
+                    p.id = obterProximoIdProduto();
+                    if (opcaoProdutos == 1)
+                    {
+                        gravarProdutoCSV(p);
+					}
+					else
+					{
+						gravarProdutoDAT(p);
+					}
                     break;
                 case 2:
-                    printf("Vai abrir função atualizar informações de produto");
+                    do
+                    {
+                        system("cls");
+                        printf("1. CSV\n2. DAT\nEscolha o formato: ");
+                        int formato;
+                        scanf(" %d", &formato);
+                    } while (opcaoProdutos != 1 && opcaoProdutos != 2);
+                    int idBusca;
+                    printf("Informe o ID do produto que deseja atualizar: ");
+                    scanf(" %d", &idBusca);
+                    int id;
+                    if (opcaoProdutos == 1)
+					{
+                        printf("Vai abrir função atualizar produto em CSV");
+                    }
+                    else
+                    {
+						printf("Vai abrir função atualizar produto em DAT");
+					}
                     break;
                 case 3:
                     printf("Vai abrir função estoque por setor");

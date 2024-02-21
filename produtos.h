@@ -58,6 +58,12 @@ int quantidadeProdutosCSV( );
 int lerProdutosCSV( PRODUTO *lista );
 
 /**
+ * Atualiza os dados de um produto no arquivo CSV
+ * @param p Produto que será atualizado no arquivo
+*/
+int atualizarProdutoCSV( PRODUTO p );
+
+/**
  * Grava um registro de PRODUTO em um arquivo binário 
  * @param p Produto que será salvo no arquivo
 */
