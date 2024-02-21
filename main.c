@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
     int opcao, opcaoVendas, opcaoClientes, opcaoProdutos;
     char msg[50];
     DATA d1, d2;
-
+    /*
     printf("Data 1\n");
     printf("\tDia ->");
     scanf(" %d", &d1.dia);
@@ -57,6 +57,7 @@ int main(int argc, char const *argv[])
     exibirProduto(produto);
     //gravarProdutoCSV(produto);
     getchar();
+    */
     do
     {
         opcao = MenuPrincipal();
