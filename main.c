@@ -113,43 +113,36 @@ int main(int argc, char const *argv[])
                 switch (opcaoProdutos)
                 {
                 case 1:
-                    do
-                    {
-                        system("cls");
-                        printf("1. CSV\n2. DAT\nEscolha o formato: ");
-                        int formato;
-                        scanf(" %d", &formato);
-                    } while (opcaoProdutos != 1 && opcaoProdutos != 2);
                     lerProduto(&p);
                     p.id = obterProximoIdProduto();
-                    if (opcaoProdutos == 1)
-                    {
-                        gravarProdutoCSV(p);
-					}
-					else
-					{
-						gravarProdutoDAT(p);
-					}
+                    gravarProdutoCSV(p);
                     break;
                 case 2:
-                    do
-                    {
-                        system("cls");
-                        printf("1. CSV\n2. DAT\nEscolha o formato: ");
-                        int formato;
-                        scanf(" %d", &formato);
-                    } while (opcaoProdutos != 1 && opcaoProdutos != 2);
                     int idBusca;
-                    printf("Informe o ID do produto que deseja atualizar: ");
-                    scanf(" %d", &idBusca);
-                    int id;
-                    if (opcaoProdutos == 1)
+                    printf("Digite o ID do produto que deseja buscar: ");
+                    scanf("%d", &idBusca);
+
+                    int quantidade = quantidadeProdutosCSV();
+                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(lista);
+                    remove("Produtos.csv");
+                    for (int i = 0; i < quantidade; i++)
 					{
-                        printf("Vai abrir função atualizar produto em CSV");
-                    }
-                    else
-                    {
-						printf("Vai abrir função atualizar produto em DAT");
+                        if (lista[i].id == idBusca)
+                        {
+                            exibirProduto(lista[i]);
+                            PRODUTO p = lista[i];
+                            printf("Deseja atualizar o produto? (S/N): ");
+                            char resp;
+							scanf(" %c", &resp);
+                            if (resp == 'S' || resp == 's')
+                            {
+                                lerProduto(&p);
+                                p.id = idBusca;
+                                lista[i] = p;
+                            }
+                        }
+                        gravarProdutoCSV(lista[i]);
 					}
                     break;
                 case 3:
