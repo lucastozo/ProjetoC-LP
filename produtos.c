@@ -17,20 +17,20 @@ void lerProduto(PRODUTO *p)
 {
     separador();
     printf("Lendo um produto \n");
-    printf("Setor do produto :  ");
+    printf("Setor:  ");
     scanf(" %[^\n]s", p->setor);
-    printf("Nome do produto: ");
+    printf("Nome: ");
     scanf(" %[^\n]s", p->nome);
-    printf("Preço do produto: ");
+    printf("Preco: ");
     scanf(" %f", &p->preco);
-    printf("Data de validade do produto\n");
+    printf("Data de validade\n");
     printf("\tDia ->");
     scanf(" %d", &p->dataValidade.dia);
     printf("\tMês ->");
     scanf(" %d", &p->dataValidade.mes);
     printf("\tAno ->");
     scanf(" %d", &p->dataValidade.ano);
-    printf("Estoque do produto: ");
+    printf("Estoque: ");
     scanf(" %i", &p->estoque);
 }
 
@@ -41,20 +41,21 @@ void lerProduto(PRODUTO *p)
 void exibirProduto(PRODUTO p)
 {
     char data[50];
+    printf("\n");
     separador();
     printf("Exibindo um produto \n");
-    printf("Idenficador do produto: ");
-    printf(" %u\n", p.id);
-    printf("Setor do produto :  ");
-    printf(" %s\n", p.setor);
-    printf("Nome do produto: ");
-    printf(" %s\n", p.nome);
-    printf("Preço do produto: ");
-    printf(" %.2f\n", p.preco);
+    printf("ID: ");
+    printf("%u\n", p.id);
+    printf("Setor: ");
+    printf("%s\n", p.setor);
+    printf("Nome: ");
+    printf("%s\n", p.nome);
+    printf("Preco: ");
+    printf("%.2f\n", p.preco);
     DataToString(p.dataValidade, data, false);
-    printf("Data de validade do produto: %s\n", data);
-    printf("Estoque do produto: ");
-    printf(" %i\n", p.estoque);
+    printf("Data de validade: %s\n", data);
+    printf("Estoque: ");
+    printf("%i\n", p.estoque);
     separador();
 }
 /**
@@ -69,8 +70,6 @@ int gravarProdutoCSV(PRODUTO p)
     csv = fopen(nomeArquivo, "r");
     if (csv == NULL)
     {
-        // arquivo não existe, será criado
-        printf("Criando arquivo %s\n", nomeArquivo);
         csv = fopen(nomeArquivo, "a");
         fprintf(csv, "id;setor;nome;preço;data de validade;estoque\n");
         fflush(csv);
@@ -199,8 +198,6 @@ int gravarProdutoDAT(PRODUTO p)
     dat = fopen(nomeArquivo, "a+b");
     if (dat == NULL)
     {
-        // arquivo não existe, será criado
-        printf("Criando arquivo %s\n", nomeArquivo);
         dat = fopen(nomeArquivo, "ab");
     }
     fwrite(&p, sizeof(PRODUTO), 1, dat);

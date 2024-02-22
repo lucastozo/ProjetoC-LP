@@ -110,15 +110,19 @@ int main(int argc, char const *argv[])
             {
                 opcaoProdutos = MenuProdutos();
                 PRODUTO p;
+                int idBusca;
+                bool encontrou;
                 switch (opcaoProdutos)
                 {
+                //Cadastrar produto
                 case 1:
                     lerProduto(&p);
                     p.id = obterProximoIdProduto();
                     gravarProdutoCSV(p);
                     break;
+
+                //Atualizar produto
                 case 2:
-                    int idBusca;
                     printf("Digite o ID do produto que deseja buscar: ");
                     scanf("%d", &idBusca);
 
@@ -144,11 +148,53 @@ int main(int argc, char const *argv[])
                         }
                         gravarProdutoCSV(lista[i]);
 					}
+                    free(lista);
                     break;
+
+                //mostrar uma listagem de produtos por Setor
                 case 3:
-                    printf("Vai abrir função estoque por setor");
+                    char setor[50];
+                    printf("Digite o setor que deseja buscar: ");
+                    scanf(" %[^\n]s", setor);
+                    quantidade = quantidadeProdutosCSV();
+                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(lista);
+                    encontrou = false;
+                    for (int i = 0; i < quantidade; i++)
+                    {
+                        if (strcmp(lista[i].setor, setor) == 0)
+						{
+							exibirProduto(lista[i]);
+                            encontrou = true;
+						}
+					}
+                    free(lista);
+                    if(!encontrou)
+					{
+						printf("Nenhum produto encontrado no setor %s\n", setor);
+					}
+					system("pause");
+					break;
+                //Produtos com estoque abaixo de 5
                 case 4:
-                    printf("Vai abrir função produtos com estoque baixo");
+                    quantidade = quantidadeProdutosCSV();
+                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(lista);
+                    encontrou = false;
+                    for (int i = 0; i < quantidade; i++)
+					{
+						if (lista[i].estoque < 5)
+						{
+							exibirProduto(lista[i]);
+                            encontrou = true;
+						}
+					}
+                    free(lista);
+                    if (!encontrou)
+                    {
+                        printf("Nenhum produto com estoque abaixo de 5\n");
+                    }
+                    system("pause");
                     break;
                 default:
                     break;
