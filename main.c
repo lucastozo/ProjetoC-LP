@@ -139,16 +139,17 @@ int main(int argc, char const *argv[])
                 case 2:
                     printf("Digite o ID do produto que deseja buscar: ");
                     scanf("%d", &idBusca);
-                    quantidade = quantidadeProdutosCSV();
-                    pListaProdutos = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(pListaProdutos);
+
+                    int quantidade = quantidadeProdutosCSV();
+                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(lista);
                     remove("Produtos.csv");
                     for (int i = 0; i < quantidade; i++)
                     {
                         if (pListaProdutos[i].id == idBusca)
                         {
-                            exibirProduto(pListaProdutos[i]);
-                            PRODUTO p = pListaProdutos[i];
+                            exibirProduto(lista[i]);
+                            PRODUTO p = lista[i];
                             printf("Deseja atualizar o produto? (S/N): ");
                             char resp;
                             scanf(" %c", &resp);
@@ -159,10 +160,11 @@ int main(int argc, char const *argv[])
                                 pListaProdutos[i] = p;
                             }
                         }
-                        gravarProdutoCSV(pListaProdutos[i]);
-                    }
-                    free(pListaProdutos);
-                    break; 
+                        gravarProdutoCSV(lista[i]);
+					}
+                    free(lista);
+                    break;
+
                 //mostrar uma listagem de produtos por Setor
                 case 3:
                     printf("Digite o setor que deseja buscar: ");
