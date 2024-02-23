@@ -46,7 +46,7 @@ int MenuClientes()
     int opcao;
     system("cls");
     separador();
-    printf("1. Cadastrar Novo Cliente\n2. Atualizar Pontuação\n3. Atualizar Cliente\n4. Listar Clientes entre 18 e 25\n 5.Listar clientes acima de 1000 pontos\n9. Sair\n");
+    printf("1. Cadastrar Novo Cliente\n2. Atualizar Pontuação\n3. Atualizar Cliente\n4. Listar Clientes entre 18 e 25 anos\n5. Listar clientes com mais de 1000 pontos\n9. Sair\n");
     separador();
     separador();
     printf("\nOpcao -> ");
@@ -72,7 +72,7 @@ int MenuAtualizarCliente()
     system("cls");
     separador();
     printf("Deseja atualizar qual dado do cliente?\n");
-    printf("1. CPF\n2. Nome\n3. Data de Nascimento\n4. Idade\n5. Endereco\n6. Cidade\n7.Estado\n9. Sair do menu de atualização de dados do cliente\n");
+    printf("1. CPF\n2. Nome\n3. Data de Nascimento\n4. Idade\n5. Endereco\n6. Cidade\n7. Estado\n9. Sair do menu de atualização de dados do cliente\n");
     separador();
     separador();
     printf("\nOpcao -> ");

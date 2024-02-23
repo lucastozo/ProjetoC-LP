@@ -5,6 +5,12 @@
 #include <string.h>
 #include <ctype.h>
 
+void limpabuffer()
+{
+    int limpa_buffer;
+    while ((limpa_buffer = getchar()) != EOF && limpa_buffer != '\n');
+}
+
 void adicionarPontosCliente( CLIENTE *c, int pontos )
 {
     c->pontos += pontos;
@@ -14,46 +20,16 @@ int gravarCliente(CLIENTE c)
 {
     char nomeArquivo[] = "Clientes.csv";
     FILE* csv;
-    csv = fopen(nomeArquivo, "r+w");
-
+    csv = fopen(nomeArquivo, "r");
     if (csv == NULL)
     {
-        // arquivo não existe, será criado
-        printf("Criando arquivo %s\n", nomeArquivo);
         csv = fopen(nomeArquivo, "a");
-        // salvando o cabeçalho do arquivo
         fprintf(csv, "CPF;Nome;Data de Nascimento;Idade;Endereço;Cidade;Estado;Pontos\n");
         fflush(csv);
     }
-    // arquivo ja existe, insere apenas o dado no final do arquivo
-    fseek(csv, 0, SEEK_END);
-    fprintf(csv, "%s;%s;%d/%d/%d;%s;%s;%s;%d\n",
-        c.CPF, c.nome,
-        c.dataNascimento.dia, c.dataNascimento.mes, c.dataNascimento.ano, c.idade,
-        c.endereco, c.cidade, c.estado,
-        c.pontos);
-    fflush(csv);
     fclose(csv);
-    return 0;
-}
-int gravarClienteTeste(CLIENTE c)
-{
-    char nomeArquivo[] = "ClientesAtualizado.csv";
-    FILE* csv;
-    csv = fopen(nomeArquivo, "r+w");
-
-    if (csv == NULL)
-    {
-        // arquivo não existe, será criado
-        printf("Criando arquivo %s\n", nomeArquivo);
-        csv = fopen(nomeArquivo, "a");
-        // salvando o cabeçalho do arquivo
-        fprintf(csv, "CPF;Nome;Data de Nascimento;Idade;Endereço;Cidade;Estado;Pontos\n");
-        fflush(csv);
-    }
-    // arquivo ja existe, insere apenas o dado no final do arquivo
-    fseek(csv, 0, SEEK_END);
-    fprintf(csv, "%s;%s;%d/%d/%d;%s;%s;%s;%d\n",
+    fopen(nomeArquivo, "a");
+    fprintf(csv, "%s;%s;%d/%d/%d;%d;%s;%s;%s;%d\n",
         c.CPF, c.nome,
         c.dataNascimento.dia, c.dataNascimento.mes, c.dataNascimento.ano, c.idade,
         c.endereco, c.cidade, c.estado,
@@ -211,16 +187,18 @@ void atualizarCliente(CLIENTE *listaClientes)
     char CPFBusca[14];
     int quantidadeClientes = quantidadeClientesCSV();
     bool clienteNaoEncontrado = true;
-    printf("Digite o CPF do cliente que deseja atualizar: ");
-    scanf("[^\n]%s", CPFBusca);
+    printf("Digite o CPF do cliente que deseja atualizar: \n");
+    scanf(" %s", CPFBusca);
+    printf("%s\n", CPFBusca);
     for (int i = 0; i < quantidadeClientes; i++)
     {
         if (strcmp(listaClientes[i].CPF, CPFBusca) == 0)
         {
             clienteNaoEncontrado = false;
-            int opcao = MenuAtualizarCliente();
+            int opcao;
             do
             {
+                opcao = MenuAtualizarCliente();
                 switch (opcao)
                 {
                 case 1:
@@ -269,9 +247,10 @@ void atualizarCliente(CLIENTE *listaClientes)
     }
     else
     {
+        remove("Clientes.csv");
         for (int i = 0; i < quantidadeClientes; i++)
         {
-            gravarClienteTeste(listaClientes[i]);
+            gravarCliente(listaClientes[i]);
         }
     }
 }

@@ -15,7 +15,7 @@
 int main(int argc, char const *argv[])
 {
     /* code */
-    PRODUTO *pListaProdutos;
+    PRODUTO *lista;
     CLIENTE *pListaClientes;
     PRODUTO produto;
     int opcao, opcaoVendas, opcaoClientes, opcaoProdutos;
@@ -146,7 +146,7 @@ int main(int argc, char const *argv[])
                     remove("Produtos.csv");
                     for (int i = 0; i < quantidade; i++)
                     {
-                        if (pListaProdutos[i].id == idBusca)
+                        if (lista[i].id == idBusca)
                         {
                             exibirProduto(lista[i]);
                             PRODUTO p = lista[i];
@@ -157,7 +157,7 @@ int main(int argc, char const *argv[])
                             {
                                 lerProduto(&p);
                                 p.id = idBusca;
-                                pListaProdutos[i] = p;
+                                lista[i] = p;
                             }
                         }
                         gravarProdutoCSV(lista[i]);
@@ -170,18 +170,18 @@ int main(int argc, char const *argv[])
                     printf("Digite o setor que deseja buscar: ");
                     scanf(" %[^\n]s", setor);
                     quantidade = quantidadeProdutosCSV();
-                    pListaProdutos = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(pListaProdutos);
+                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(lista);
                     encontrou = false;
                     for (int i = 0; i < quantidade; i++)
                     {
-                        if (strcmp(pListaProdutos[i].setor, setor) == 0)
+                        if (strcmp(lista[i].setor, setor) == 0)
 						{
-							exibirProduto(pListaProdutos[i]);
+							exibirProduto(lista[i]);
                             encontrou = true;
 						}
 					}
-                    free(pListaProdutos);
+                    free(lista);
                     if(!encontrou)
 					{
 						printf("Nenhum produto encontrado no setor %s\n", setor);
@@ -191,18 +191,18 @@ int main(int argc, char const *argv[])
                 //Produtos com estoque abaixo de 5
                 case 4:
                     quantidade = quantidadeProdutosCSV();
-                    pListaProdutos = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(pListaProdutos);
+                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(lista);
                     encontrou = false;
                     for (int i = 0; i < quantidade; i++)
 					{
-						if (pListaProdutos[i].estoque < 5)
+						if (lista[i].estoque < 5)
 						{
-							exibirProduto(pListaProdutos[i]);
+							exibirProduto(lista[i]);
                             encontrou = true;
 						}
 					}
-                    free(pListaProdutos);
+                    free(lista);
                     if (!encontrou)
                     {
                         printf("Nenhum produto com estoque abaixo de 5\n");
