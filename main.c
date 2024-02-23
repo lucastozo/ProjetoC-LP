@@ -129,11 +129,13 @@ int main(int argc, char const *argv[])
                     int quantidade = quantidadeProdutosCSV();
                     lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
                     lerProdutosCSV(lista);
+                    encontrou = false;
                     remove("Produtos.csv");
                     for (int i = 0; i < quantidade; i++)
 					{
                         if (lista[i].id == idBusca)
                         {
+                            encontrou = true;
                             exibirProduto(lista[i]);
                             PRODUTO p = lista[i];
                             printf("Deseja atualizar o produto? (S/N): ");
@@ -147,6 +149,10 @@ int main(int argc, char const *argv[])
                             }
                         }
                         gravarProdutoCSV(lista[i]);
+					}
+                    if (!encontrou)
+					{
+						printf("Nenhum produto encontrado com o ID %d\n", idBusca);
 					}
                     free(lista);
                     break;
