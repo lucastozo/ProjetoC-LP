@@ -66,3 +66,16 @@ int MenuProdutos()
     scanf(" %d", &opcao);
     return opcao;
 }
+int MenuAtualizarCliente()
+{
+    int opcao;
+    system("cls");
+    separador();
+    printf("Deseja atualizar qual dado do cliente?\n");
+    printf("1. CPF\n2. Nome\n3. Data de Nascimento\n4. Idade\n5. Endereco\n6. Cidade\n7.Estado\n9. Sair do menu de atualização de dados do cliente\n");
+    separador();
+    separador();
+    printf("\nOpcao -> ");
+    scanf(" %d", &opcao);
+    return opcao;
+}

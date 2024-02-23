@@ -32,4 +32,10 @@ int MenuClientes();
 */
 int MenuProdutos();
 
+/**
+ * Gera o menu de atualização de dados do cliente e retorna a opção desejada pelo usuário
+ * @return Retorna o item escolhido pelo o usuário
+*/
+int MenuAtualizarCliente();
+
 #endif

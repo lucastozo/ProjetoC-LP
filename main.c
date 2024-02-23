@@ -4,6 +4,7 @@
 #include "produtos.h"
 #include "apresentacao.h"
 #include "tempo.h"
+#include "cliente.h"
 
 /*************************************************************************************/
 
@@ -14,7 +15,8 @@
 int main(int argc, char const *argv[])
 {
     /* code */
-    PRODUTO *lista;
+    PRODUTO *pListaProdutos;
+    CLIENTE *pListaClientes;
     PRODUTO produto;
     int opcao, opcaoVendas, opcaoClientes, opcaoProdutos;
     char msg[50];
@@ -70,8 +72,10 @@ int main(int argc, char const *argv[])
                 switch (opcaoVendas)
                 {
                 case 1:
+                {
                     printf("Vai abrir função nova venda");
                     break;
+                }
                 case 2:
                     printf("Vai abrir função lista de vendas do cliente");
                     break;
@@ -84,21 +88,30 @@ int main(int argc, char const *argv[])
             do
             {
                 opcaoClientes = MenuClientes();
+                CLIENTE novoCliente;
+                int quantidade = quantidadeClientesCSV;
                 switch (opcaoClientes)
                 {
                 case 1:
-                    printf("Vai abrir função castrar novo cliente");
+                    // Cadastro de novo cliente
+                    lerCliente(&novoCliente);
+                    gravarCliente(novoCliente);
                     break;
                 case 2:
-                    printf("Vai abrir função atualizar pontuação");
+                    // Atualização da pontuação
                     break;
                 case 3:
-                    printf("Vai abrir função atualizar cliente");
+                    quantidade = quantidadeClientesCSV();
+                    pListaClientes = (CLIENTE*)malloc(sizeof(CLIENTE) * quantidade);
+                    lerClientesCSV(pListaClientes);
+                    atualizarCliente(pListaClientes);
+                    free(pListaClientes);
+                    // Atualização dos dados do cliente
                 case 4:
-                    printf("Vai abrir função listar clientes de 18 a 25");
+                    // listar clientes de 18 a 25 anos
                     break;
                 case 5:
-                    printf("Vai abrir função listar clientes acima de 1000 pontos");
+                    // listar clientes com mais de 1000 pontos
                     break;
                 default:
                     break;
@@ -112,6 +125,8 @@ int main(int argc, char const *argv[])
                 PRODUTO p;
                 int idBusca;
                 bool encontrou;
+                int quantidade;
+                char setor[50];
                 switch (opcaoProdutos)
                 {
                 //Cadastrar produto
@@ -120,55 +135,51 @@ int main(int argc, char const *argv[])
                     p.id = obterProximoIdProduto();
                     gravarProdutoCSV(p);
                     break;
-
                 //Atualizar produto
                 case 2:
                     printf("Digite o ID do produto que deseja buscar: ");
                     scanf("%d", &idBusca);
-
-                    int quantidade = quantidadeProdutosCSV();
-                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(lista);
+                    quantidade = quantidadeProdutosCSV();
+                    pListaProdutos = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(pListaProdutos);
                     remove("Produtos.csv");
                     for (int i = 0; i < quantidade; i++)
-					{
-                        if (lista[i].id == idBusca)
+                    {
+                        if (pListaProdutos[i].id == idBusca)
                         {
-                            exibirProduto(lista[i]);
-                            PRODUTO p = lista[i];
+                            exibirProduto(pListaProdutos[i]);
+                            PRODUTO p = pListaProdutos[i];
                             printf("Deseja atualizar o produto? (S/N): ");
                             char resp;
-							scanf(" %c", &resp);
+                            scanf(" %c", &resp);
                             if (resp == 'S' || resp == 's')
                             {
                                 lerProduto(&p);
                                 p.id = idBusca;
-                                lista[i] = p;
+                                pListaProdutos[i] = p;
                             }
                         }
-                        gravarProdutoCSV(lista[i]);
-					}
-                    free(lista);
-                    break;
-
+                        gravarProdutoCSV(pListaProdutos[i]);
+                    }
+                    free(pListaProdutos);
+                    break; 
                 //mostrar uma listagem de produtos por Setor
                 case 3:
-                    char setor[50];
                     printf("Digite o setor que deseja buscar: ");
                     scanf(" %[^\n]s", setor);
                     quantidade = quantidadeProdutosCSV();
-                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(lista);
+                    pListaProdutos = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(pListaProdutos);
                     encontrou = false;
                     for (int i = 0; i < quantidade; i++)
                     {
-                        if (strcmp(lista[i].setor, setor) == 0)
+                        if (strcmp(pListaProdutos[i].setor, setor) == 0)
 						{
-							exibirProduto(lista[i]);
+							exibirProduto(pListaProdutos[i]);
                             encontrou = true;
 						}
 					}
-                    free(lista);
+                    free(pListaProdutos);
                     if(!encontrou)
 					{
 						printf("Nenhum produto encontrado no setor %s\n", setor);
@@ -178,18 +189,18 @@ int main(int argc, char const *argv[])
                 //Produtos com estoque abaixo de 5
                 case 4:
                     quantidade = quantidadeProdutosCSV();
-                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(lista);
+                    pListaProdutos = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
+                    lerProdutosCSV(pListaProdutos);
                     encontrou = false;
                     for (int i = 0; i < quantidade; i++)
 					{
-						if (lista[i].estoque < 5)
+						if (pListaProdutos[i].estoque < 5)
 						{
-							exibirProduto(lista[i]);
+							exibirProduto(pListaProdutos[i]);
                             encontrou = true;
 						}
 					}
-                    free(lista);
+                    free(pListaProdutos);
                     if (!encontrou)
                     {
                         printf("Nenhum produto com estoque abaixo de 5\n");
@@ -220,7 +231,6 @@ int main(int argc, char const *argv[])
             printf("Quantidade de registros (binário): %d\n", qtdeBin);     
             getchar();  
             getchar();*/    
-            break;
         default:
             break;
         }
