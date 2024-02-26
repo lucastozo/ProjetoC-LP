@@ -133,12 +133,14 @@
     <ClCompile Include="..\main.c" />
     <ClCompile Include="..\produtos.c" />
     <ClCompile Include="..\tempo.c" />
+    <ClCompile Include="..\vendas.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\apresentacao.h" />
     <ClInclude Include="..\cliente.h" />
     <ClInclude Include="..\produtos.h" />
     <ClInclude Include="..\tempo.h" />
+    <ClInclude Include="..\vendas.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\makefile" />

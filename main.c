@@ -5,6 +5,7 @@
 #include "apresentacao.h"
 #include "tempo.h"
 #include "cliente.h"
+#include "vendas.h"
 
 /*************************************************************************************/
 
@@ -77,7 +78,7 @@ int main(int argc, char const *argv[])
                     break;
                 }
                 case 2:
-                    printf("Vai abrir função lista de vendas do cliente");
+                    listarComprasDeCliente();
                     break;
                 default:
                     break;
