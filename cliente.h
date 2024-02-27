@@ -5,7 +5,7 @@
 
 typedef struct CLIENTE
 {
-    char CPF[14];
+    char CPF[15];
     char nome[51];
     DATA dataNascimento;
     int idade;

@@ -184,11 +184,11 @@ int quantidadeClientesCSV()
 }
 void atualizarCliente(CLIENTE *listaClientes)
 {
-    char CPFBusca[14];
+    char CPFBusca[15];
     int quantidadeClientes = quantidadeClientesCSV();
     bool clienteNaoEncontrado = true;
     printf("Digite o CPF do cliente que deseja atualizar: \n");
-    scanf(" %s", CPFBusca);
+    scanf(" %[^\n]s", CPFBusca);
     printf("%s\n", CPFBusca);
     for (int i = 0; i < quantidadeClientes; i++)
     {
