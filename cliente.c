@@ -29,7 +29,6 @@ int gravarCliente(CLIENTE c)
     }
     fclose(csv);
     fopen(nomeArquivo, "a");
-    //teste
     fprintf(csv, "%s;%s;%d/%d/%d;%d;%s;%s;%s;%d\n",
         c.CPF, c.nome,
         c.dataNascimento.dia, c.dataNascimento.mes, c.dataNascimento.ano, c.idade,
