@@ -122,117 +122,30 @@ int main(int argc, char const *argv[])
             do
             {
                 opcaoProdutos = MenuProdutos();
-                PRODUTO p;
-                int idBusca;
-                bool encontrou;
-                int quantidade;
                 char setor[50];
                 switch (opcaoProdutos)
                 {
                 //Cadastrar produto
                 case 1:
-                    lerProduto(&p);
-                    p.id = obterProximoIdProduto();
-                    gravarProdutoCSV(p);
+                    cadastrarProduto();
                     break;
                 //Atualizar produto
                 case 2:
-                    printf("Digite o ID do produto que deseja buscar: ");
-                    scanf("%d", &idBusca);
-
-                    int quantidade = quantidadeProdutosCSV();
-                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(lista);
-                    remove("Produtos.csv");
-                    for (int i = 0; i < quantidade; i++)
-                    {
-                        if (lista[i].id == idBusca)
-                        {
-                            exibirProduto(lista[i]);
-                            PRODUTO p = lista[i];
-                            printf("Deseja atualizar o produto? (S/N): ");
-                            char resp;
-                            scanf(" %c", &resp);
-                            if (resp == 'S' || resp == 's')
-                            {
-                                lerProduto(&p);
-                                p.id = idBusca;
-                                lista[i] = p;
-                            }
-                        }
-                        gravarProdutoCSV(lista[i]);
-					}
-                    free(lista);
+                    atualizarProduto();
                     break;
-
                 //mostrar uma listagem de produtos por Setor
                 case 3:
-                    printf("Digite o setor que deseja buscar: ");
-                    scanf(" %[^\n]s", setor);
-                    quantidade = quantidadeProdutosCSV();
-                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(lista);
-                    encontrou = false;
-                    for (int i = 0; i < quantidade; i++)
-                    {
-                        if (strcmp(lista[i].setor, setor) == 0)
-						{
-							exibirProduto(lista[i]);
-                            encontrou = true;
-						}
-					}
-                    free(lista);
-                    if(!encontrou)
-					{
-						printf("Nenhum produto encontrado no setor %s\n", setor);
-					}
-					system("pause");
+                    produtosPorSetor();
 					break;
                 //Produtos com estoque abaixo de 5
                 case 4:
-                    quantidade = quantidadeProdutosCSV();
-                    lista = (PRODUTO *)malloc(sizeof(PRODUTO) * quantidade);
-                    lerProdutosCSV(lista);
-                    encontrou = false;
-                    for (int i = 0; i < quantidade; i++)
-					{
-						if (lista[i].estoque < 5)
-						{
-							exibirProduto(lista[i]);
-                            encontrou = true;
-						}
-					}
-                    free(lista);
-                    if (!encontrou)
-                    {
-                        printf("Nenhum produto com estoque abaixo de 5\n");
-                    }
-                    system("pause");
+                    produtosEstoqueAbaixoDe5();
                     break;
                 default:
                     break;
                 }
             } while (opcaoProdutos != 9);
             break;
-            /*lista = (PRODUTO *)malloc(sizeof(PRODUTO) * 10);
-            int qtdeProdutos = lerProdutosCSV(lista);
-            printf("Quantidade de registros: %d\n", qtdeProdutos);
-            for (int i = 0; i < qtdeProdutos; i++)
-            {
-                separador();
-                printf("Produto %d\n", i + 1);
-                separador();
-                exibirProduto(lista[i]);
-                gravarProdutoDAT(lista[i]);
-                separador();
-            }
-            free(lista);
-            lista = (PRODUTO *)malloc(sizeof(PRODUTO) * 10);
-            int qtdeBin;
-            qtdeBin = lerProdutosDAT(lista);
-            printf("Quantidade de registros (binário): %d\n", qtdeBin);     
-            getchar();  
-            getchar();*/    
         default:
             break;
         }

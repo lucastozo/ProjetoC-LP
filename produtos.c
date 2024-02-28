@@ -289,3 +289,113 @@ unsigned int obterProximoIdProduto()
     }
     return id;
 }
+
+//procedimentos de produto
+/*
+Procedimento que insere um novo produto no CSV
+*/
+void cadastrarProduto()
+{
+    PRODUTO p;
+    lerProduto(&p);
+    p.id = obterProximoIdProduto();
+    gravarProdutoCSV(p);
+}
+
+/*
+Procedimento que atualiza os dados de um produto no CSV
+*/
+void atualizarProduto()
+{
+    PRODUTO p;
+    printf("Digite o ID do produto que deseja buscar: ");
+    int idBusca;
+    scanf("%d", &idBusca);
+
+    int quantidade = quantidadeProdutosCSV();
+    PRODUTO* lista;
+    lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
+
+    lerProdutosCSV(lista);
+    remove("Produtos.csv");
+    for (int i = 0; i < quantidade; i++)
+    {
+        if (lista[i].id == idBusca)
+        {
+            exibirProduto(lista[i]);
+            PRODUTO p = lista[i];
+            printf("Deseja atualizar o produto? (S/N): ");
+            char resp;
+            scanf(" %c", &resp);
+            if (resp == 'S' || resp == 's')
+            {
+                lerProduto(&p);
+                p.id = idBusca;
+                lista[i] = p;
+            }
+        }
+        gravarProdutoCSV(lista[i]);
+    }
+    free(lista);
+}
+
+/*
+Procedimento que mostra todos os produtos de um dado setor
+*/
+void produtosPorSetor()
+{
+    char setor[50];
+    printf("Digite o setor que deseja buscar: ");
+    scanf(" %[^\n]s", setor);
+
+    int quantidade = quantidadeProdutosCSV();
+    PRODUTO* lista;
+    lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
+    lerProdutosCSV(lista);
+
+    bool encontrou = false;
+    for (int i = 0; i < quantidade; i++)
+    {
+        if (strcmp(lista[i].setor, setor) == 0)
+        {
+            exibirProduto(lista[i]);
+            encontrou = true;
+        }
+    }
+    free(lista);
+
+    if (!encontrou)
+    {
+        printf("Nenhum produto encontrado no setor %s\n", setor);
+    }
+    system("pause");
+}
+
+/*
+Procedimento que mostra todos os produtos com estoque abaixo de 5
+*/
+void produtosEstoqueAbaixoDe5()
+{
+    int quantidade = quantidadeProdutosCSV();
+
+    PRODUTO* lista;
+    lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
+    lerProdutosCSV(lista);
+
+    bool encontrou = false;
+    for (int i = 0; i < quantidade; i++)
+    {
+        if (lista[i].estoque < 5)
+        {
+            exibirProduto(lista[i]);
+            encontrou = true;
+        }
+    }
+    free(lista);
+
+    if (!encontrou)
+    {
+        printf("Nenhum produto com estoque abaixo de 5\n");
+    }
+    system("pause");
+}

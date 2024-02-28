@@ -88,4 +88,25 @@ unsigned int obterProximoIdProduto();
  */ 
 int lerProdutosDAT(PRODUTO *lista);
 
+//procedimentos de produto
+/*
+Procedimento que insere um novo produto no CSV
+*/
+void cadastrarProduto();
+
+/*
+Procedimento que atualiza os dados de um produto no CSV
+*/
+void atualizarProduto();
+
+/*
+Procedimento que mostra todos os produtos de um dado setor
+*/
+void produtosPorSetor();
+
+/*
+Procedimento que mostra todos os produtos com estoque abaixo de 5
+*/
+void produtosEstoqueAbaixoDe5();
+
 #endif
