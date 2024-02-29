@@ -124,12 +124,11 @@ void exibirVenda(VENDA venda)
  * @param nomeCliente Nome do cliente
  * @return Retorna o CPF do cliente
 */
-char encontraCpfCliente(char nomeCliente[])
+void encontraCpfCliente(char* nomeCliente, char* cpf)
 {
-    char cpf[15];
     int quantidade = quantidadeClientesCSV();
     CLIENTE* lista;
-    lista = (CLIENTE*)malloc(sizeof(VENDA) * quantidade);
+    lista = (CLIENTE*)malloc(sizeof(CLIENTE) * quantidade);
     lerClientesCSV(lista);
 
     for (int i = 0; i < quantidade; i++)
@@ -137,13 +136,10 @@ char encontraCpfCliente(char nomeCliente[])
         if (strcmp(lista[i].nome, nomeCliente) == 0)
         {
             strcpy(cpf, lista[i].CPF);
-            free(lista);
-            return cpf;
+            break;
         }
     }
     free(lista);
-    printf("Nenhum cliente encontrado com o nome fornecido.\n");
-    return cpf;
 }
 
 /**
@@ -151,7 +147,7 @@ Procedimento que lista todas as compras de um determinado cliente
 */
 void listarComprasDeCliente()
 {
-    char buscador[] = "default"; // cpf ou nome completo, entrada do usuario
+    char buscador[50]; // cpf ou nome completo, entrada do usuario
     printf("Escolha a forma de busca: \n1. CPF \n2. Nome Completo");
     printf("\nOpcao -> ");
     int opcaoBusca = 0;
@@ -167,7 +163,9 @@ void listarComprasDeCliente()
 
     if (opcaoBusca == 2)
     {
-        strcpy(buscador, encontraCpfCliente(buscador)); // ESTÁ DANDO ERRO NA EXECUÇÃO DA FUNÇÃO ENCONTRACPFCLIENTE
+        char* cpf[15];
+        encontraCpfCliente(buscador, cpf);
+        strcpy(buscador, cpf);
     }
 
     int quantidade = quantidadeVendasCSV();
