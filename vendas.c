@@ -192,3 +192,104 @@ void listarComprasDeCliente()
     }
     system("pause");
 }
+
+int encontraEstoque(int idProduto)
+{
+    int estoque = 0;
+    int quantidade = quantidadeProdutosCSV();
+    PRODUTO* lista;
+    lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
+    lerProdutosCSV(lista);
+
+    for (int i = 0; i < quantidade; i++)
+    {
+        if (lista[i].id == idProduto)
+        {
+            estoque = lista[i].estoque;
+            free(lista);
+            return estoque;
+        }
+    }
+    free(lista);
+    printf("Esse produto não foi cadastrado\n");
+    return estoque;
+}
+
+int diminuiEstoque(int idProduto, int quantidade_itens)
+{
+    int quantidade = quantidadeProdutosCSV();
+    PRODUTO* lista;
+    lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
+    lerProdutosCSV(lista);
+
+    for (int i = 0; i < quantidade; i++)
+    {
+        if (lista[i].id == idProduto)
+        {
+            lista[i].estoque = (lista[i].estoque - quantidade_itens);
+            free(lista);
+            return 0;
+        }
+    }
+    free(lista);
+    printf("Esse produto não foi cadastrado\n");
+    return 0;
+}
+
+int encontraPreco(int idProduto)
+{
+    int preco = 0;
+    int quantidade = quantidadeProdutosCSV();
+    PRODUTO* lista;
+    lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
+    lerProdutosCSV(lista);
+
+    for (int i = 0; i < quantidade; i++)
+    {
+        if (lista[i].id == idProduto)
+        {
+            preco = lista[i].preco;
+            free(lista);
+            return preco;
+        }
+    }
+    free(lista);
+    printf("Esse produto não foi cadastrado\n");
+    return preco;
+
+int Nova_Venda() // NÃO FINALIZADA
+{   
+    VENDA novaVenda;
+    int quantidade_itens, id_produto;
+    char cpf[15];
+    novaVenda.quantidadeItens = 0;
+    novaVenda.valorTotal = 0;
+    system("cls");
+    separador();
+    printf("Digite o CPF do cliente:\n");
+    scanf(" %s", );
+    if (!(Checar_cpf_cadastrado())) {
+        Cadastrar_cpf();
+    }
+    do {
+        printf("Digite o código do produto:\n");
+        scanf(" %d", &id_produto);
+        if (id_produto != 0) {
+            printf("Quantas unidades do produto?\n");
+            scanf(" %d", &quantidade_itens);
+            if (encontraEstoque(id_produto) >= quantidade_itens)
+            {
+                diminuiEstoque(id_produto, quantidade_itens);
+                novaVenda.quantidadeItens = (novaVenda.quantidadeItens + 1);
+                novaVenda.valorTotal = (novaVenda.valorTotal + (encontraPreco(id_produto) * quantidade_itens));
+            }
+            else {
+                printf("Não há quantidade disponível de produton\n");
+            }
+        }
+        else {
+            printf("Compra finalizada\n");
+            return 0;
+        }
+    }
+}
