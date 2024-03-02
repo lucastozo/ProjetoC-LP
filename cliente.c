@@ -354,7 +354,6 @@ bool verificaCadastroCliente(char cpf[15])
             clienteEncontrado = true;
             free(pListaClientes);
             return clienteEncontrado;
-            
         }
     }
     free(pListaClientes);
