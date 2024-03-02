@@ -340,8 +340,7 @@ void listarClientesAcima1000Pontos()
     system("pause");
     free(pListaClientes);
 }
-}
-bool VerificaCadastroCliente(char cpf[15])
+bool verificaCadastroCliente(char cpf[15])
 {
     CLIENTE* pListaClientes;
     pListaClientes = (CLIENTE*)malloc(sizeof(CLIENTE) * quantidadeClientesCSV());

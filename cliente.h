@@ -80,5 +80,5 @@ void listarClientesAcima1000Pontos();
 /*
     Retorna se verdadeiro se o cliente ja está cadastrado e falso caso o contrário
 */
-bool VerificaCadastroCliente();
+bool verificaCadastroCliente();
 #endif
