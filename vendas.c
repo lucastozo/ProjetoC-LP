@@ -1,6 +1,7 @@
 #include "vendas.h"
 #include "apresentacao.h"
 #include "cliente.h"
+#include "produtos.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -255,13 +256,15 @@ int encontraPreco(int idProduto)
     printf("Esse produto não foi cadastrado\n");
     return preco;
 
-int Nova_Venda() // NÃO FINALIZADA
+int Nova_Venda()
 {   
     VENDA novaVenda;
+    ITEM_COMPRADO novoItem;
     int quantidade_itens, id_produto;
     char cpf[15];
-    novaVenda.quantidadeItens = 0;
+    novaVenda.quantidadeItens = 0;  
     novaVenda.valorTotal = 0;
+    novaVenda.id = quantidadeVendasCSV() + 1;
     system("cls");
     separador();
     printf("Digite o CPF do cliente:\n");
@@ -280,9 +283,15 @@ int Nova_Venda() // NÃO FINALIZADA
                 diminuiEstoque(id_produto, quantidade_itens);
                 novaVenda.quantidadeItens = (novaVenda.quantidadeItens + 1);
                 novaVenda.valorTotal = (novaVenda.valorTotal + (encontraPreco(id_produto) * quantidade_itens));
+                novoItem.IdVenda = novaVenda.id;
+                novoItem.CPF = cpf;
+                novoItem.IdProduto = id_produto;
+                novoItem.Quantidade = quantidade_itens;
+                novoItem.Unitario = (encontraPreco(id_produto);
+                novoItem.Total = novaVenda.valorTotal;
             }
             else {
-                printf("Não há quantidade disponível de produton\n");
+                printf("Não há quantidade disponível de produtos\n");
             }
         }
         else {
@@ -290,4 +299,27 @@ int Nova_Venda() // NÃO FINALIZADA
             return 0;
         }
     }
+    while (id_produto != 0) {
+        printf("Digite o código do produto:\n");
+        scanf(" %d", &id_produto);
+            printf("Quantas unidades do produto?\n");
+            scanf(" %d", &quantidade_itens);
+            if (encontraEstoque(id_produto) >= quantidade_itens)
+            {
+                diminuiEstoque(id_produto, quantidade_itens);
+                novaVenda.quantidadeItens = (novaVenda.quantidadeItens + 1);
+                novaVenda.valorTotal = (novaVenda.valorTotal + (encontraPreco(id_produto) * quantidade_itens));
+                novoItem.IdVenda = novaVenda.id;
+                novoItem.CPF = cpf;
+                novoItem.IdProduto = id_produto;
+                novoItem.Quantidade = quantidade_itens;
+                novoItem.Unitario = (encontraPreco(id_produto);
+                novoItem.Total = novaVenda.valorTotal;
+            }
+            else {
+                printf("Não há quantidade disponível de produtos\n");
+            }
+    }
+    printf("Compra finalizada\n");
+    return 0;
 }

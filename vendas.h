@@ -20,6 +20,17 @@ typedef struct VENDA
     unsigned int quantidadeItens;
 } VENDA;
 
+typedef struct ITEM_COMPRADO
+{
+    IdVenda; CPF; IdProduto; Quantidade; Unitario; Total
+    unsigned int IdVenda;
+    char CPF[14];
+    unsigned int IdProduto;
+    int Quantidade;
+    float Unitario;
+    float Total;
+} ITEM_COMPRADO;
+
 /**
  * Verifica a quantidade de vendas registradas 
  * @return Retorna a quantidade de vendas registradas
@@ -45,5 +56,11 @@ Procedimento que lista todas as compras de um determinado cliente
 */
 void listarComprasDeCliente();
 
+int encontraEstoque();
 
+int diminuiEstoque();
+
+int encontraPreco();
+
+int Nova_Venda();
 #endif
