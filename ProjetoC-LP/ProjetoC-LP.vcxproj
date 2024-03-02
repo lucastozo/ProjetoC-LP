@@ -133,7 +133,9 @@
     <ClCompile Include="..\main.c" />
     <ClCompile Include="..\produtos.c" />
     <ClCompile Include="..\tempo.c" />
-    <ClCompile Include="..\vendas.c" />
+    <ClCompile Include="..\vendas.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\apresentacao.h" />

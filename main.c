@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
+#include <windows.h>
 #include "produtos.h"
 #include "apresentacao.h"
 #include "tempo.h"
@@ -15,10 +17,16 @@
  */
 int main(int argc, char const *argv[])
 {
-    /* code */
-    PRODUTO *lista;
-    CLIENTE *pListaClientes;
-    PRODUTO produto;
+    /*
+    Code Page para arrumar o input e output do console
+    mudar SetConsoleOutputCP para 1252 e depois para 65001 
+    sempre que quiser exibir (print) os dados dos registros que contém caracteres com acento, por exemplo: 'listaclientes.nome' : João
+    */
+    unsigned int cpin = GetConsoleCP();
+    unsigned int cpout = GetConsoleOutputCP();
+    SetConsoleCP(1252);
+    SetConsoleOutputCP(65001);
+
     int opcao, opcaoVendas, opcaoClientes, opcaoProdutos;
     char msg[50];
     DATA d1, d2;
@@ -78,7 +86,9 @@ int main(int argc, char const *argv[])
                     break;
                 }
                 case 2:
+                    /*
                     listarComprasDeCliente();
+                    */
                     break;
                 default:
                     break;
@@ -89,30 +99,22 @@ int main(int argc, char const *argv[])
             do
             {
                 opcaoClientes = MenuClientes();
-                CLIENTE novoCliente;
-                int quantidade = quantidadeClientesCSV;
                 switch (opcaoClientes)
                 {
                 case 1:
-                    // Cadastro de novo cliente
-                    lerCliente(&novoCliente);
-                    gravarCliente(novoCliente);
+                    cadastroNovoCliente();
                     break;
                 case 2:
-                    // Atualização da pontuação
+                    adicionarManualPontosCliente();
                     break;
                 case 3:
-                    quantidade = quantidadeClientesCSV();
-                    pListaClientes = (CLIENTE*)malloc(sizeof(CLIENTE) * quantidade);
-                    lerClientesCSV(pListaClientes);
-                    atualizarCliente(pListaClientes);
-                    free(pListaClientes);
-                    // Atualização dos dados do cliente
+                    atualizarCliente();
+                    break;
                 case 4:
-                    // listar clientes de 18 a 25 anos
+                    listarClientes18a25anos();
                     break;
                 case 5:
-                    // listar clientes com mais de 1000 pontos
+                    listarClientesAcima1000Pontos();
                     break;
                 default:
                     break;
@@ -151,4 +153,6 @@ int main(int argc, char const *argv[])
             break;
         }
     } while (opcao != 9);
+    SetConsoleCP(cpin);
+    SetConsoleOutputCP(cpout);
 }

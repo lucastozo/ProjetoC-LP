@@ -15,51 +15,65 @@ typedef struct CLIENTE
     unsigned int pontos;
 } CLIENTE;
 
-
-/**
- * Gravando os dados de um cliente no final do arquivo. Caso o arquivo
- * não exista, gera um novo arquivo com as colunas que são o cabeçalho
- * @param c Cliente que será salvo no registro
+/*
+    Gravando os dados de um cliente no final do arquivo. Caso o arquivo
+    não exista, gera um novo arquivo com as colunas que são o cabeçalho
+    @param c Cliente que será salvo no final do arquivo Clientes.csv
 */
-int gravarCliente(CLIENTE c);
+int gravarClienteCSV(CLIENTE c);
 
-/**
-*Rotina que lê os dados de um cliente através do teclado
-* @param c Ponteiro para um registro do tipo CLIENTE,
-* onde os dados lidos serão armazenados
+/*
+    Rotina que lê os dados de um cliente através do teclado
+    os dados serão salvos no arquivo final do arquivo Clientes.csv
 */
-void lerCliente(CLIENTE * c);
+void cadastroNovoCliente();
 
-/**
- * Exibe os campos contidos em um registro do tipo PRODUTO
- * @param p Registro que será exibido
-*/
-void exibirCliente(CLIENTE c);
-
-/**
- * Adiciona pontos a um determinado cliente
- * @param c Ponteiro para o cliente que será adicionado
- * @param pontos Pontos a serem adicionados ao cliente c *
-*/
-void adicionarPontosCliente(CLIENTE* c, int pontos);
-
-/**
-* Leitura de dados do CSV para registros
-* @param lista Ponteiro para um vetor de registros
-* com os dados que estão no arquivo
-* @return Retorna a quantidade de clientes cadastrados
-*/
-int lerClientesCSV(CLIENTE * lista);
-
-/**
- * Retorna a quantidade de clientes que estão salvos no arquivo CSV
- * @return Quantidade de clientes salvos
+/*
+    Retorna a quantidade de clientes que estão salvos no arquivo CSV
+    @return Quantidade de clientes salvos
 */
 int quantidadeClientesCSV();
 
-/**
-* Atualiza o arquivo CSV conforme necessidade do usuário, copiando o arquivo original
-* modificando a parte a ser atualizada e por fim criando um novo arquivo com o mesmo nome 
+/*
+    Leitura de dados do CSV para registros
+    @param lista Ponteiro para um vetor de registros
+    com os dados que estão no arquivo
 */
-void atualizarCliente(CLIENTE* listaClientes);
+void lerClientesCSV(CLIENTE* lista);
+
+/*
+    Adiciona pontos a um determinado cliente
+    @param CPF em formato string do cliente
+    @param Pontos a serem adicionados ao cliente
+    @return retorna 0 se teve sucesso em encontrar o CPF do cliente e adicionar os pontos, 1 se não teve.
+*/
+int adicionarPontosClienteCPF(char* CPF, int pontos);
+
+/*
+    Adiciona Manualmente pontos a um cliente
+    Pede ao usuário o CPF do cliente e a quantidade de pontos
+*/
+void adicionarManualPontosCliente();
+
+/*
+    Atualiza o arquivo CSV conforme necessidade do usuário, copiando o arquivo original
+    modificando a parte a ser atualizada e por fim criando um novo arquivo com o mesmo nome
+*/
+void atualizarCliente();
+
+/*
+    Exibe os campos contidos em um registro do tipo CLIENTE
+    @param p Registro que será exibido
+*/
+void exibirCliente(CLIENTE c);
+
+/*
+    lista todos os clientes com idades entre 18 e 25 anos
+*/
+void listarClientes18a25anos();
+
+/*
+    lista todos os clientes com 1000 ou mais pontos
+*/
+void listarClientesAcima1000Pontos();
 #endif

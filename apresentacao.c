@@ -22,7 +22,6 @@ int MenuPrincipal()
     separador();
     separador();
     printf("\nOpcao -> ");
-    
     scanf(" %d", &opcao );
     return opcao;
 }
@@ -46,7 +45,7 @@ int MenuClientes()
     int opcao;
     system("cls");
     separador();
-    printf("1. Cadastrar Novo Cliente\n2. Atualizar Pontuação\n3. Atualizar Cliente\n4. Listar Clientes entre 18 e 25 anos\n5. Listar clientes com mais de 1000 pontos\n9. Sair\n");
+    printf("1. Cadastrar Novo Cliente\n2. Atualizar Pontuação\n3. Atualizar Cliente\n4. Listar clientes entre 18 e 25 anos\n5. Listar clientes com mais de 1000 pontos\n9. Sair\n");
     separador();
     separador();
     printf("\nOpcao -> ");
