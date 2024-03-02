@@ -254,3 +254,20 @@ void atualizarCliente(CLIENTE *listaClientes)
         }
     }
 }
+bool VerificaCadastroCliente(char cpf[15])
+{
+    CLIENTE* pListaClientes;
+    pListaClientes = (CLIENTE*)malloc(sizeof(CLIENTE) * quantidadeClientesCSV());
+    lerClientesCSV(pListaClientes);
+    int quantidadeClientes = quantidadeClientesCSV();
+    bool clienteEncontrado = false;
+    for (int i = 0; i < quantidadeClientes; i++)
+    {
+        if (strcmp(pListaClientes[i].CPF, cpf) == 0)
+        {
+            clienteEncontrado = true;
+            return clienteEncontrado;
+        }
+    }
+    return clienteEncontrado;
+}

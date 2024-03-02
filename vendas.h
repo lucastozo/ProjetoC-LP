@@ -22,9 +22,8 @@ typedef struct VENDA
 
 typedef struct ITEM_COMPRADO
 {
-    IdVenda; CPF; IdProduto; Quantidade; Unitario; Total
     unsigned int IdVenda;
-    char CPF[14];
+    char CPF[15];
     unsigned int IdProduto;
     int Quantidade;
     float Unitario;
@@ -56,11 +55,15 @@ Procedimento que lista todas as compras de um determinado cliente
 */
 void listarComprasDeCliente();
 
+/* Função retorna o estoque do produto*/
 int encontraEstoque();
 
+/* Função diminui o estoque do produto*/
 int diminuiEstoque();
 
-int encontraPreco();
+/* Função retorna o preço do produto*/
+float encontraPreco();
 
+/*Função de venda*/
 int Nova_Venda();
 #endif

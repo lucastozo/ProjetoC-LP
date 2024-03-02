@@ -62,4 +62,7 @@ int quantidadeClientesCSV();
 * modificando a parte a ser atualizada e por fim criando um novo arquivo com o mesmo nome 
 */
 void atualizarCliente(CLIENTE* listaClientes);
+
+/*Retorna se verdadeiro se o cliente ja está cadastrado e falso caso o contrário*/
+bool VerificaCadastroCliente();
 #endif
