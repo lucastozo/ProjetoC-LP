@@ -294,11 +294,9 @@ int Nova_Venda()
     separador();
     printf("Digite o CPF do cliente:\n");
     scanf(" %s", &cpf_venda);
-    if (!(VerificaCadastroCliente(cpf_venda))) 
+    if (!(verificaCadastroCliente(cpf_venda))) 
     {
-        CLIENTE novoCliente;
-        //lerNovoCliente(novoCliente);
-        gravarCliente(novoCliente);
+        cadastroNovoCliente();
     }
     do 
     {
