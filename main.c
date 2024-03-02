@@ -82,7 +82,7 @@ int main(int argc, char const *argv[])
                 {
                 case 1:
                 {
-                    printf("Vai abrir função nova venda");
+                    Nova_Venda(); 
                     break;
                 }
                 case 2:

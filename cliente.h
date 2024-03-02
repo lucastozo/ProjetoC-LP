@@ -76,4 +76,9 @@ void listarClientes18a25anos();
     lista todos os clientes com 1000 ou mais pontos
 */
 void listarClientesAcima1000Pontos();
+
+/*
+    Retorna se verdadeiro se o cliente ja está cadastrado e falso caso o contrário
+*/
+bool VerificaCadastroCliente();
 #endif
