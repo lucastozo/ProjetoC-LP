@@ -255,6 +255,7 @@ int encontraPreco(int idProduto)
     free(lista);
     printf("Esse produto não foi cadastrado\n");
     return preco;
+}
 
 int Nova_Venda()
 {   
