@@ -296,6 +296,8 @@ int Nova_Venda()
     scanf(" %s", &cpf_venda);
     if (!(verificaCadastroCliente(cpf_venda))) 
     {
+        system("cls");
+        printf("Cadastrando novo cliente\n");
         cadastroNovoCliente();
     }
     do 
