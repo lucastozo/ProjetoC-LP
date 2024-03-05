@@ -274,7 +274,7 @@ void GravaItemComprado_CSV(ITEM_COMPRADO ic)
 
  // arquivo ja existe, insere apenas o dado no final do arquivo
     fprintf(csv, "%d;%s;%d;%d;%.2f;%.2f\n",
-        ic.IdVenda, ic.CPF, ic.IdProduto, ic.Quantidade, ic.Total, ic.Unitario);
+        ic.IdVenda, ic.CPF, ic.IdProduto, ic.Quantidade, ic.Unitario, ic.Total);
     fflush(csv);
     fclose(csv);
     // salvando o cabeçalho do arquivo
@@ -297,12 +297,13 @@ int Nova_Venda()
     if (!(verificaCadastroCliente(cpf_venda))) 
     {
         system("cls");
-        printf("Cadastrando novo cliente\n");
+        printf("Cliente não encontrado!\n");
+        printf("Cadastrando novo cliente...\n");
         cadastroNovoCliente();
     }
     do 
     {
-        printf("Digite o código do produto:\n");
+        printf("Digite o código do produto (digite 0 para finalizar a venda):\n");
         scanf(" %d", &id_produto);
         if (id_produto != 0) 
         {
@@ -311,8 +312,8 @@ int Nova_Venda()
             if (encontraEstoque(id_produto) >= quantidade_itens)
             {
                 diminuiEstoque(id_produto, quantidade_itens);
-                novaVenda.quantidadeItens = (novaVenda.quantidadeItens + 1);
-                novaVenda.valorTotal = (novaVenda.valorTotal + (encontraPreco(id_produto) * quantidade_itens));
+                novaVenda.quantidadeItens += 1;
+                novaVenda.valorTotal += encontraPreco(id_produto) * quantidade_itens;
                 novoItem.IdVenda = novaVenda.id;
                 strcpy(novoItem.CPF, cpf_venda);
                 novoItem.IdProduto = id_produto;
@@ -329,29 +330,7 @@ int Nova_Venda()
             printf("Compra finalizada\n");
             return 0;
         }
-    } while (id_produto != 0); {
-        printf("Digite o código do produto:\n");
-        scanf(" %d", &id_produto);
-        printf("Quantas unidades do produto?\n");
-        scanf(" %d", &quantidade_itens);
-        if (encontraEstoque(id_produto) >= quantidade_itens)
-        {
-            diminuiEstoque(id_produto, quantidade_itens);
-            novaVenda.quantidadeItens = (novaVenda.quantidadeItens + 1);
-            novaVenda.valorTotal = (novaVenda.valorTotal + (encontraPreco(id_produto) * quantidade_itens));
-            novoItem.IdVenda = novaVenda.id;
-            strcpy(novoItem.CPF, cpf_venda);
-            novoItem.IdProduto = id_produto;
-            novoItem.Quantidade = quantidade_itens;
-            novoItem.Unitario = (encontraPreco(id_produto));
-            novoItem.Total = novaVenda.valorTotal;
-            GravaItemComprado_CSV(novoItem);
-        }
-        else 
-        {
-            printf("Não há quantidade disponível de produtos\n");
-        }
-    }
+    } while (id_produto != 0);
     printf("Compra finalizada\n");
     return 0;
 }
