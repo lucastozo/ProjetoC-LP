@@ -280,6 +280,30 @@ void GravaItemComprado_CSV(ITEM_COMPRADO ic)
     // salvando o cabeçalho do arquivo
 
 }
+void GravaVendas_CSV(VENDA vnd)
+{
+    char nomeArquivo[] = "Vendas.csv";
+    FILE* csv;
+    csv = fopen(nomeArquivo, "r");
+    if (csv == NULL)
+    {
+        csv = fopen(nomeArquivo, "a");
+        fprintf(csv, "Id;CPF;Data da Compra;Valor Total;Itens\n");
+        fflush(csv);
+    }
+    fclose(csv);
+    csv = fopen(nomeArquivo, "a");
+
+    // fseek(csv, 0, SEEK_END);
+
+ // arquivo ja existe, insere apenas o dado no final do arquivo
+    fprintf(csv, "%d;%s;%d;%d;%d;%.2f;%d\n",
+        vnd.Id, vnd.CPF, vnd.Data_da_Compra.Dia, vnd.Data_da_Compra.Mes, vnd.Data_da_Compra.Ano, vnd.Valor_Total, vnd.Itens);
+    fflush(csv);
+    fclose(csv);
+    // salvando o cabeçalho do arquivo
+
+}
 
 int Nova_Venda()
 {   
@@ -321,6 +345,8 @@ int Nova_Venda()
                 novoItem.Unitario = (encontraPreco(id_produto));
                 novoItem.Total = novaVenda.valorTotal;
                 GravaItemComprado_CSV(novoItem);
+                GravaVendas_CSV(novaVenda);
+                adicionarPontosClienteCPF(cpf_venda, novaVenda.valorTotal);
             }
             else {
                 printf("Não há quantidade disponível de produtos\n");
