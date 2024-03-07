@@ -298,7 +298,7 @@ void GravaVendas_CSV(VENDA vnd)
 
  // arquivo ja existe, insere apenas o dado no final do arquivo
     fprintf(csv, "%d;%s;%d;%d;%d;%.2f;%d\n",
-        vnd.Id, vnd.CPF, vnd.Data_da_Compra.Dia, vnd.Data_da_Compra.Mes, vnd.Data_da_Compra.Ano, vnd.Valor_Total, vnd.Itens);
+        vnd.id, vnd.CPF, vnd.dataCompra.dia, vnd.dataCompra.mes, vnd.dataCompra.ano, vnd.valorTotal, vnd.quantidadeItens);
     fflush(csv);
     fclose(csv);
     // salvando o cabeçalho do arquivo
