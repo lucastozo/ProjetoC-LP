@@ -86,9 +86,7 @@ int main(int argc, char const *argv[])
                     break;
                 }
                 case 2:
-                    /*
                     listarComprasDeCliente();
-                    */
                     break;
                 default:
                     break;

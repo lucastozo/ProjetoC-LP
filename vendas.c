@@ -297,7 +297,7 @@ void GravaVendas_CSV(VENDA vnd)
     // fseek(csv, 0, SEEK_END);
 
  // arquivo ja existe, insere apenas o dado no final do arquivo
-    fprintf(csv, "%d;%s;%d;%d;%d;%.2f;%d\n",
+    fprintf(csv, "%d;%s;%d/%d/%d;%.2f;%d\n",
         vnd.id, vnd.CPF, vnd.dataCompra.dia, vnd.dataCompra.mes, vnd.dataCompra.ano, vnd.valorTotal, vnd.quantidadeItens);
     fflush(csv);
     fclose(csv);
@@ -336,8 +336,17 @@ int Nova_Venda()
             if (encontraEstoque(id_produto) >= quantidade_itens)
             {
                 diminuiEstoque(id_produto, quantidade_itens);
-                novaVenda.quantidadeItens += 1;
+
+                novaVenda.id = quantidadeVendasCSV() + 1;
+                for(int i =0; i < 14; i++)
+                {
+					novaVenda.CPF[i] = cpf_venda[i];
+				}
+                novaVenda.CPF[14] = '\0';
+                novaVenda.dataCompra = hoje();
                 novaVenda.valorTotal += encontraPreco(id_produto) * quantidade_itens;
+                novaVenda.quantidadeItens += quantidade_itens;
+
                 novoItem.IdVenda = novaVenda.id;
                 strcpy(novoItem.CPF, cpf_venda);
                 novoItem.IdProduto = id_produto;
