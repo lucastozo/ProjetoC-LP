@@ -45,12 +45,12 @@ void cadastroNovoCliente()
     scanf(" %[^\n]s", c.CPF);
     printf("Nome do cliente: ");
     scanf(" %[^\n]s", c.nome);
-    printf("Data de Nascimento do Cliente: ");
-    printf("\tDia ->");
+    printf("Data de Nascimento\n");
+    printf("\tDia: ");
     scanf(" %d", &c.dataNascimento.dia);
-    printf("\tMês ->");
+    printf("\tMês: ");
     scanf(" %d", &c.dataNascimento.mes);
-    printf("\tAno ->");
+    printf("\tAno: ");
     scanf(" %d", &c.dataNascimento.ano);
     printf("Idade do cliente: ");
     scanf(" %d", &c.idade);
@@ -192,10 +192,10 @@ void adicionarManualPontosCliente()
 {
     LimparTela();
     char CPFBusca[15];
-    printf("Digite o CPF do cliente que deseja adicionar pontos: \n");
+    printf("Digite o CPF do cliente que deseja adicionar pontos: ");
     scanf(" %[^\n]s", CPFBusca);
     int pontos = 0;
-    printf("Digite a quantidade de pontos que deseja adicionar ao cliente\n");
+    printf("Digite a quantidade de pontos que deseja adicionar ao cliente: ");
     scanf(" %d", &pontos);
     if ((adicionarPontosClienteCPF(CPFBusca, pontos)) != 0)
     {
@@ -211,7 +211,7 @@ int MenuAtualizarCliente(CLIENTE c)
     exibirCliente(c);
     separador();
     printf("Deseja atualizar qual dado do cliente?\n");
-    printf("1. CPF\n2. Nome\n3. Data de Nascimento\n4. Idade\n5. Endereco\n6. Cidade\n7. Estado\n9. Sair do menu de atualização de dados do cliente\n");
+    printf("1. CPF\n2. Nome\n3. Data de Nascimento\n4. Idade\n5. Endereco\n6. Cidade\n7. Estado\n9. Sair\n");
     separador();
     printf("\nOpção -> ");
     scanf(" %d", &opcao);

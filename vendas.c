@@ -129,7 +129,7 @@ void listarComprasDeCliente()
 {
     LimparTela();
     char buscador[50]; // cpf ou nome completo, entrada do usuario
-    printf("Escolha a forma de busca: \n1. CPF \n2. Nome Completo \n9. Sair");
+    printf("Escolha a forma de busca: \n1. CPF \n2. Nome Completo \n9. Sair\n");
     printf("\nOpcao -> ");
     int opcaoBusca = 0;
     scanf("%d", &opcaoBusca);
@@ -310,11 +310,11 @@ int Nova_Venda()
     }
     do 
     {
-        printf("Digite o código do produto (digite 0 para finalizar a venda):\n");
+        printf("Digite o código do produto (digite 0 para finalizar a venda): ");
         scanf(" %d", &id_produto);
         if (id_produto != 0) 
         {
-            printf("Quantas unidades do produto?\n");
+            printf("Unidades: ");
             scanf(" %d", &quantidade_itens);
             if (encontraEstoque(id_produto) >= quantidade_itens)
             {

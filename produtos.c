@@ -18,11 +18,11 @@ void lerProduto(PRODUTO *p)
     printf("Preco: ");
     scanf(" %f", &p->preco);
     printf("Data de validade\n");
-    printf("\tDia ->");
+    printf("\tDia: ");
     scanf(" %d", &p->dataValidade.dia);
-    printf("\tMês ->");
+    printf("\tMês: ");
     scanf(" %d", &p->dataValidade.mes);
-    printf("\tAno ->");
+    printf("\tAno: ");
     scanf(" %d", &p->dataValidade.ano);
     printf("Estoque: ");
     scanf(" %i", &p->estoque);
@@ -312,6 +312,7 @@ void produtosPorSetor()
     char setor[50];
     printf("Digite o setor que deseja buscar: ");
     scanf(" %[^\n]s", setor);
+    LimparTela();
 
     int quantidade = quantidadeProdutosCSV();
     PRODUTO* lista;
