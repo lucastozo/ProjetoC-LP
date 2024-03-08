@@ -57,21 +57,6 @@ int quantidadeProdutosCSV( );
 */
 int lerProdutosCSV( PRODUTO *lista );
 
-
-/**
- * Grava um registro de PRODUTO em um arquivo binário 
- * @param p Produto que será salvo no arquivo
-*/
-int gravarProdutoDAT( PRODUTO p);
-
-
-/**
- * Retorna a quantidade de produtos que estão salvos no arquivo DAT
- * @return Quantidade de produtos salvos
-*/
-int quantidadeProdutosDAT( );
-
-
 /**
  * Rotina que devolve o id a ser utilizado no próximo cadastro
  * @param formato Define se é para o tipo de arquivo csv ou para o tipo dat
@@ -80,19 +65,17 @@ int quantidadeProdutosDAT( );
 */
 unsigned int obterProximoIdProduto();
 
-/**
- * Leitura de dados do arquivo binário para registros 
- * @param lista Ponteiro para um vetor de registros 
- * com os dados que estão no arquivo
- * @return Retorna a quantidade de produtos cadastrados
- */ 
-int lerProdutosDAT(PRODUTO *lista);
-
 //procedimentos de produto
 /*
 Procedimento que insere um novo produto no CSV
 */
 void cadastrarProduto();
+
+/*
+    Exibe o menu de atualização de produto
+    @return retorna a escolha do usuário
+*/
+int MenuAtualizarProduto(PRODUTO p);
 
 /*
 Procedimento que atualiza os dados de um produto no CSV

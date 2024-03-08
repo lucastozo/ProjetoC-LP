@@ -38,8 +38,8 @@ int gravarClienteCSV(CLIENTE c)
 
 void cadastroNovoCliente()
 {
+    LimparTela();
     CLIENTE c;
-    separador();
     printf("Insira os dados do cliente \n");
     printf("CPF do cliente: ");
     scanf(" %[^\n]s", c.CPF);
@@ -190,6 +190,7 @@ int adicionarPontosClienteCPF(char* CPF, int pontos)
 
 void adicionarManualPontosCliente()
 {
+    LimparTela();
     char CPFBusca[15];
     printf("Digite o CPF do cliente que deseja adicionar pontos: \n");
     scanf(" %[^\n]s", CPFBusca);
@@ -203,8 +204,22 @@ void adicionarManualPontosCliente()
     }
 }
 
+int MenuAtualizarCliente(CLIENTE c)
+{
+    int opcao;
+    LimparTela();
+    exibirCliente(c);
+    separador();
+    printf("Deseja atualizar qual dado do cliente?\n");
+    printf("1. CPF\n2. Nome\n3. Data de Nascimento\n4. Idade\n5. Endereco\n6. Cidade\n7. Estado\n9. Sair do menu de atualização de dados do cliente\n");
+    separador();
+    printf("\nOpção -> ");
+    scanf(" %d", &opcao);
+    return opcao;
+}
 void atualizarCliente()
 {
+    LimparTela();
     char CPFBusca[15];
     int quantidadeClientes = quantidadeClientesCSV();
     CLIENTE* pListaClientes;
@@ -212,7 +227,7 @@ void atualizarCliente()
     lerClientesCSV(pListaClientes);
     bool clienteNaoEncontrado = true;
     bool atualizouCliente = false;
-    printf("Digite o CPF do cliente que deseja atualizar: \n");
+    printf("Digite o CPF do cliente que deseja atualizar: ");
     scanf(" %[^\n]s", CPFBusca);
     for (int i = 0; i < quantidadeClientes; i++)
     {
@@ -222,7 +237,7 @@ void atualizarCliente()
             int opcao;
             do
             {
-                opcao = MenuAtualizarCliente();
+                opcao = MenuAtualizarCliente(pListaClientes[i]);
                 switch (opcao)
                 {
                 case 1:
@@ -269,6 +284,9 @@ void atualizarCliente()
                     break;
                 }
             } while (opcao != 9);
+
+            // parar o laço for
+            break;
         }
     }
     if (clienteNaoEncontrado)
@@ -291,7 +309,6 @@ void exibirCliente(CLIENTE c)
 {
     SetConsoleOutputCP(1252);
     char data[50];
-    printf("\n");
     separador();
     printf("Exibindo um cliente: \n");
     printf("CPF: %s\n", c.CPF);
@@ -304,41 +321,60 @@ void exibirCliente(CLIENTE c)
     printf("Estado: %s\n", c.estado);
     printf("Pontos: %d\n", c.pontos);
     separador();
+    printf("\n");
     SetConsoleOutputCP(65001);
 }
 
 void listarClientes18a25anos()
 {
+    LimparTela();
     int quantidadeClientes = quantidadeClientesCSV();
     CLIENTE* pListaClientes;
     pListaClientes = (CLIENTE*)malloc(sizeof(CLIENTE) * quantidadeClientes);
     lerClientesCSV(pListaClientes);
+
+    bool encontrou = false;
     for (int i = 0; i < quantidadeClientes; i++)
     {
         if (pListaClientes[i].idade >= 18 & pListaClientes[i].idade <= 25)
         {
             exibirCliente(pListaClientes[i]);
+            encontrou = true;
         }
     }
-    system("pause");
     free(pListaClientes);
+
+    if (!encontrou)
+    {
+        printf("Nenhum cliente entre 18 e 25 anos\n");
+    }
+    system("pause");
 }
 
 void listarClientesAcima1000Pontos()
 {
+    LimparTela();
     int quantidadeClientes = quantidadeClientesCSV();
     CLIENTE* pListaClientes;
     pListaClientes = (CLIENTE*)malloc(sizeof(CLIENTE) * quantidadeClientes);
     lerClientesCSV(pListaClientes);
+
+    bool encontrou = false;
     for (int i = 0; i < quantidadeClientes; i++)
     {
         if (pListaClientes[i].pontos >= 1000)
         {
             exibirCliente(pListaClientes[i]);
+            encontrou = true;
         }
     }
-    system("pause");
     free(pListaClientes);
+
+    if (!encontrou)
+    {
+        printf("Nenhum cliente com mais de 1000 pontos\n");
+    }
+    system("pause");
 }
 bool verificaCadastroCliente(char cpf[15])
 {

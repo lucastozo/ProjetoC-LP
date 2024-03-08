@@ -8,16 +8,10 @@
 const char separadorCSV = ';';
 // char SETOR[6][] = {"Higiene", "Limpeza", "Bebidas", "Frios", "Padaria", "Açougue"};
 
-/**
- * Rotina que lê os dados de um produto através do teclado
- * @param p Ponteiro para um registro do tipo PRODUTO,
- * onde os dados lidos serão armazenados
- */
 void lerProduto(PRODUTO *p)
 {
-    separador();
     printf("Lendo um produto \n");
-    printf("Setor:  ");
+    printf("Setor: ");
     scanf(" %[^\n]s", p->setor);
     printf("Nome: ");
     scanf(" %[^\n]s", p->nome);
@@ -34,14 +28,9 @@ void lerProduto(PRODUTO *p)
     scanf(" %i", &p->estoque);
 }
 
-/**
- * Exibe os campos contidos em um registro do tipo PRODUTO
- * @param p Registro que será exibido
- */
 void exibirProduto(PRODUTO p)
 {
     char data[50];
-    printf("\n");
     separador();
     printf("Exibindo um produto \n");
     printf("ID: ");
@@ -57,12 +46,9 @@ void exibirProduto(PRODUTO p)
     printf("Estoque: ");
     printf("%i\n", p.estoque);
     separador();
+    printf("\n");
 }
-/**
- * Gravando os dados de um produto no final do arquivo. Caso o arquivo
- * não exista, gera um novo arquivo com as colunas que são o cabeçalho
- * @param p Produto que será salvo no registro
- */
+
 int gravarProdutoCSV(PRODUTO p)
 {
     char nomeArquivo[] = "Produtos.csv";
@@ -76,8 +62,6 @@ int gravarProdutoCSV(PRODUTO p)
     }
     fclose(csv);
     csv = fopen(nomeArquivo, "a");
-        
-       // fseek(csv, 0, SEEK_END);
      
     // arquivo ja existe, insere apenas o dado no final do arquivo
     fprintf(csv, "%d;%s;%s;%.2f;%d/%d/%d;%d\n",
@@ -86,7 +70,6 @@ int gravarProdutoCSV(PRODUTO p)
             p.estoque);
     fflush(csv);
     fclose(csv);
-    // salvando o cabeçalho do arquivo
     return 0;
 }
 
@@ -114,12 +97,7 @@ int quantidadeProdutosCSV()
         return 0;
     }
 }
-/**
- * Leitura de dados do CSV para registros
- * @param lista Ponteiro para um vetor de registros
- * com os dados que estão no arquivo
- * @return Retorna a quantidade de produtos cadastrados
- */
+
 int lerProdutosCSV(PRODUTO *lista)
 {
     char nomeArquivo[] = "Produtos.csv";
@@ -187,80 +165,6 @@ int lerProdutosCSV(PRODUTO *lista)
     }
 }
 
-/**
- * Grava um registro de PRODUTO em um arquivo binário
- * @param p Produto que será salvo no arquivo
- */
-int gravarProdutoDAT(PRODUTO p)
-{
-    char nomeArquivo[] = "Produtos.dat";
-    FILE *dat;
-    dat = fopen(nomeArquivo, "a+b");
-    if (dat == NULL)
-    {
-        dat = fopen(nomeArquivo, "ab");
-    }
-    fwrite(&p, sizeof(PRODUTO), 1, dat);
-    fflush(dat);
-    fclose(dat);
-    return 0;
-}
-
-int quantidadeProdutosDAT()
-{
-    int qtde = 0;
-    PRODUTO dummy;
-    char nomeArquivo[] = "Produtos.dat";
-    FILE *dat;
-    dat = fopen(nomeArquivo, "rb");
-    if (dat != NULL)
-    {
-        while (fread(&dummy, sizeof(PRODUTO), 1, dat) > 0)
-            qtde++;
-
-        return qtde;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-/**
- * Leitura de dados do arquivo binário para registros
- * @param lista Ponteiro para um vetor de registros
- * com os dados que estão no arquivo
- * @return Retorna a quantidade de produtos cadastrados
- */
-int lerProdutosDAT(PRODUTO *lista)
-{
-    int qtde = 0;
-    char nomeArquivo[] = "Produtos.dat";
-    FILE *dat;
-    dat = fopen(nomeArquivo, "rb");
-    if (dat != NULL)
-    {
-        while (fread(&lista[qtde], sizeof(PRODUTO), 1, dat) > 0)
-        {
-            // exibirProduto(lista[qtde]);
-            qtde++;
-        }
-        return qtde;
-    }
-    else
-    {
-        printf("Erro - Arquivo %s não encontrado\n", nomeArquivo);
-        return -1;
-    }
-}
-
-
-/**
- * Rotina que devolve o id a ser utilizado no próximo cadastro
- * @param formato Define se é para o tipo de arquivo csv ou para o tipo dat
- * @return Retorna o próximo ID a ser utilizado. Se o formato não for definido para 
- * um dos dois válidos ("CSV" ou "DAT"), a função retorna -1.
-*/
 unsigned int obterProximoIdProduto()
 {
     char nomeArquivo[] = "idProduto.dat";
@@ -290,24 +194,32 @@ unsigned int obterProximoIdProduto()
     return id;
 }
 
-//procedimentos de produto
-/*
-Procedimento que insere um novo produto no CSV
-*/
 void cadastrarProduto()
 {
+    LimparTela();
     PRODUTO p;
     lerProduto(&p);
     p.id = obterProximoIdProduto();
     gravarProdutoCSV(p);
 }
 
-/*
-Procedimento que atualiza os dados de um produto no CSV
-*/
+int MenuAtualizarProduto(PRODUTO p)
+{
+    int opcao;
+    LimparTela();
+    exibirProduto(p);
+    separador();
+    printf("Deseja atualizar qual dado do produto?\n");
+    printf("1. ID\n2. Setor\n3. Nome\n4. Preço\n5. Data de Validade\n6. Estoque\n9. Sair\n");
+    separador();
+    printf("\nOpção -> ");
+    scanf(" %d", &opcao);
+    return opcao;
+}
+
 void atualizarProduto()
 {
-    PRODUTO p;
+    LimparTela();
     printf("Digite o ID do produto que deseja buscar: ");
     int idBusca;
     scanf("%d", &idBusca);
@@ -315,35 +227,88 @@ void atualizarProduto()
     int quantidade = quantidadeProdutosCSV();
     PRODUTO* lista;
     lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
-
     lerProdutosCSV(lista);
-    remove("Produtos.csv");
+
+    bool encontrou = false;
+    bool produtoAtualizado = false;
+    PRODUTO p;
     for (int i = 0; i < quantidade; i++)
     {
         if (lista[i].id == idBusca)
         {
-            exibirProduto(lista[i]);
-            PRODUTO p = lista[i];
-            printf("Deseja atualizar o produto? (S/N): ");
-            char resp;
-            scanf(" %c", &resp);
-            if (resp == 'S' || resp == 's')
+            p = lista[i];
+            encontrou = true;
+            int opcao;
+            do
             {
-                lerProduto(&p);
-                p.id = idBusca;
-                lista[i] = p;
-            }
+                opcao = MenuAtualizarProduto(p);
+                if (opcao == 9)
+                {
+                    break;
+                }
+                produtoAtualizado = true;
+                switch (opcao)
+                {
+                    case 1:
+                        printf("\nAtualizar ID -> ");
+                        scanf(" %d", &p.id);
+                        break;
+
+                    case 2:
+                        printf("\nAtualizar Setor -> ");
+                        scanf(" %[^\n]s", &p.setor);
+                        break;
+
+                    case 3:
+                        printf("\nAtualizar Nome -> ");
+                        scanf(" %[^\n]s", &p.nome);
+                        break;
+
+                    case 4:
+                        printf("\nAtualizar Preço -> ");
+                        scanf(" %f", &p.preco);
+                        break;
+
+                    case 5:
+                        printf("\nAtualizar Data de validade -> ");
+                        printf("\nDia -> ");
+                        scanf(" %d", &p.dataValidade.dia);
+                        printf("\nMês -> ");
+                        scanf(" %d", &p.dataValidade.mes);
+                        printf("\nAno -> ");
+                        scanf(" %d", &p.dataValidade.ano);
+                        break;
+
+                    case 6:
+                        printf("\nAtualizar Estoque -> ");
+                        scanf(" %d", &p.estoque);
+                        break;
+                }
+            } while (opcao != 9);
+
+            lista[i] = p;
         }
-        gravarProdutoCSV(lista[i]);
+    }
+
+    if (!encontrou)
+    {
+        printf("Nenhum produto encontrado com este ID.");
+        system("pause");
+    }
+    else if (produtoAtualizado)
+    {
+        remove("Produtos.csv");
+        for (int i = 0; i < quantidade; i++)
+        {
+            gravarProdutoCSV(lista[i]);
+        }
     }
     free(lista);
 }
 
-/*
-Procedimento que mostra todos os produtos de um dado setor
-*/
 void produtosPorSetor()
 {
+    LimparTela();
     char setor[50];
     printf("Digite o setor que deseja buscar: ");
     scanf(" %[^\n]s", setor);
@@ -371,13 +336,10 @@ void produtosPorSetor()
     system("pause");
 }
 
-/*
-Procedimento que mostra todos os produtos com estoque abaixo de 5
-*/
 void produtosEstoqueAbaixoDe5()
 {
+    LimparTela();
     int quantidade = quantidadeProdutosCSV();
-
     PRODUTO* lista;
     lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
     lerProdutosCSV(lista);

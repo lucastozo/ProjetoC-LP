@@ -1,7 +1,10 @@
 #ifndef __APRESENTACAO_H__
 #define __APRESENTACAO_H__
 
-
+/**
+ * Limpa o terminal
+*/
+void LimparTela();
 
 /**
  * Cria um separador de linhas para exibição
@@ -31,11 +34,5 @@ int MenuClientes();
  * @return Retorna o item escolhido pelo o usuário
 */
 int MenuProdutos();
-
-/**
- * Gera o menu de atualização de dados do cliente e retorna a opção desejada pelo usuário
- * @return Retorna o item escolhido pelo o usuário
-*/
-int MenuAtualizarCliente();
 
 #endif

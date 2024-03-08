@@ -7,10 +7,6 @@
 #include <string.h>
 #include <ctype.h>
 
-/**
- * Verifica a quantidade de vendas registradas 
- * @return Retorna a quantidade de vendas registradas
-*/
 int quantidadeVendasCSV()
 {
     char nomeArquivo[] = "Vendas.csv";
@@ -36,11 +32,6 @@ int quantidadeVendasCSV()
     }
 }
 
-/**
- * Faz a leitura do arquivo vendas.csv e carrega 
- * as informações na lista utilizada como parâmetro
- * @param lista Ponteiro para o vetor que armazena a lista de VENDAS realizadas
-*/
 int lerVendasCSV(VENDA *lista )
 {
     char nomeArquivo[] = "Vendas.csv";
@@ -103,10 +94,6 @@ int lerVendasCSV(VENDA *lista )
 
 }
 
-/**
- * Exibe os campos contidos em um registro do tipo VENDA
- * @param venda Registro que será exibido
-*/
 void exibirVenda(VENDA venda)
 {
     char data[50];
@@ -120,11 +107,6 @@ void exibirVenda(VENDA venda)
     printf("%u\n", venda.quantidadeItens);
 }
 
-/**
- * Encontra o CPF de um cliente dado o nome dele
- * @param nomeCliente Nome do cliente
- * @return Retorna o CPF do cliente
-*/
 void encontraCpfCliente(char* nomeCliente, char* cpf)
 {
     int quantidade = quantidadeClientesCSV();
@@ -143,22 +125,25 @@ void encontraCpfCliente(char* nomeCliente, char* cpf)
     free(lista);
 }
 
-/**
-Procedimento que lista todas as compras de um determinado cliente
-*/
 void listarComprasDeCliente()
 {
+    LimparTela();
     char buscador[50]; // cpf ou nome completo, entrada do usuario
-    printf("Escolha a forma de busca: \n1. CPF \n2. Nome Completo");
+    printf("Escolha a forma de busca: \n1. CPF \n2. Nome Completo \n9. Sair");
     printf("\nOpcao -> ");
     int opcaoBusca = 0;
     scanf("%d", &opcaoBusca);
 
-    if (opcaoBusca == 1) {
-        printf("Insira o CPF do cliente (xxx.xxx.xxx-xx): ");
-    }
-    else {
-        printf("Insira o nome completo do cliente: ");
+    switch(opcaoBusca)
+    {
+        case 1:
+            printf("Insira o CPF do cliente (xxx.xxx.xxx-xx): ");
+            break;
+        case 2:
+            printf("Insira o nome completo do cliente: ");
+            break;
+        default:
+            return;
     }
     scanf(" %[^\n]s", buscador);
 
@@ -256,6 +241,7 @@ float encontraPreco(int idProduto)
     printf("Esse produto não foi cadastrado\n");
     return preco;
 }
+
 void GravaItemComprado_CSV(ITEM_COMPRADO ic)
 {
     char nomeArquivo[] = "ItensCompras.csv";
@@ -270,8 +256,6 @@ void GravaItemComprado_CSV(ITEM_COMPRADO ic)
     fclose(csv);
     csv = fopen(nomeArquivo, "a");
 
-    // fseek(csv, 0, SEEK_END);
-
  // arquivo ja existe, insere apenas o dado no final do arquivo
     fprintf(csv, "%d;%s;%d;%d;%.2f;%.2f\n",
         ic.IdVenda, ic.CPF, ic.IdProduto, ic.Quantidade, ic.Unitario, ic.Total);
@@ -280,6 +264,7 @@ void GravaItemComprado_CSV(ITEM_COMPRADO ic)
     // salvando o cabeçalho do arquivo
 
 }
+
 void GravaVendas_CSV(VENDA vnd)
 {
     char nomeArquivo[] = "Vendas.csv";
@@ -293,8 +278,6 @@ void GravaVendas_CSV(VENDA vnd)
     }
     fclose(csv);
     csv = fopen(nomeArquivo, "a");
-
-    // fseek(csv, 0, SEEK_END);
 
  // arquivo ja existe, insere apenas o dado no final do arquivo
     fprintf(csv, "%d;%s;%d/%d/%d;%.2f;%d\n",
@@ -314,15 +297,15 @@ int Nova_Venda()
     novaVenda.quantidadeItens = 0;  
     novaVenda.valorTotal = 0;
     novaVenda.id = quantidadeVendasCSV() + 1;
-    system("cls");
-    separador();
-    printf("Digite o CPF do cliente:\n");
+    LimparTela();
+    printf("Digite o CPF do cliente: ");
     scanf(" %s", &cpf_venda);
     if (!(verificaCadastroCliente(cpf_venda))) 
     {
-        system("cls");
+        LimparTela();
         printf("Cliente não encontrado!\n");
         printf("Cadastrando novo cliente...\n");
+        system("pause");
         cadastroNovoCliente();
     }
     do 

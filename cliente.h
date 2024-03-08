@@ -56,6 +56,12 @@ int adicionarPontosClienteCPF(char* CPF, int pontos);
 void adicionarManualPontosCliente();
 
 /*
+    Exibe o menu de atualização de cliente
+    @return retorna a escolha do usuário
+*/
+int MenuAtualizarCliente(CLIENTE c);
+
+/*
     Atualiza o arquivo CSV conforme necessidade do usuário, copiando o arquivo original
     modificando a parte a ser atualizada e por fim criando um novo arquivo com o mesmo nome
 */
@@ -80,5 +86,5 @@ void listarClientesAcima1000Pontos();
 /*
     Retorna se verdadeiro se o cliente ja está cadastrado e falso caso o contrário
 */
-bool verificaCadastroCliente();
+bool verificaCadastroCliente(char cpf[15]);
 #endif

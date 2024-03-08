@@ -51,6 +51,13 @@ int lerVendasCSV(VENDA *lista );
 void exibirVenda(VENDA venda);
 
 /**
+ * Encontra o CPF de um cliente dado o nome dele
+ * @param nomeCliente Nome do cliente
+ * @param cpf CPF a ser atribuido, passado por referência
+*/
+void encontraCpfCliente(char* nomeCliente, char* cpf);
+
+/**
 Procedimento que lista todas as compras de um determinado cliente
 */
 void listarComprasDeCliente();
@@ -63,6 +70,18 @@ int diminuiEstoque();
 
 /* Função retorna o preço do produto*/
 float encontraPreco();
+
+/**
+Procedimento que grava em Itens_Compra.csv o item de uma venda
+@param ic Item comprado na venda
+*/
+void GravaItemComprado_CSV(ITEM_COMPRADO ic);
+
+/**
+Procedimento que grava em Vendas.csv uma venda realizada
+@param vnd Struct VENDA que terá seus campos preenchidos e gravados no csv
+*/
+void GravaVendas_CSV(VENDA vnd);
 
 /*Função de venda*/
 int Nova_Venda();
