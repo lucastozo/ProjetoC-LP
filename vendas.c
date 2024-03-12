@@ -310,45 +310,78 @@ int Nova_Venda()
     }
     do 
     {
-        printf("Digite o código do produto (digite 0 para finalizar a venda): ");
-        scanf(" %d", &id_produto);
-        if (id_produto != 0) 
+        int resultado = -1;
+        do
         {
-            printf("Unidades: ");
-            scanf(" %d", &quantidade_itens);
-            if (encontraEstoque(id_produto) >= quantidade_itens)
+            LimparTela();
+            printf("Digite o código do produto (digite 0 para finalizar a venda): ");
+            scanf(" %d", &id_produto);
+            if (id_produto == 0)
             {
-                diminuiEstoque(id_produto, quantidade_itens);
-
-                novaVenda.id = quantidadeVendasCSV() + 1;
-                for(int i =0; i < 14; i++)
-                {
-					novaVenda.CPF[i] = cpf_venda[i];
-				}
-                novaVenda.CPF[14] = '\0';
-                novaVenda.dataCompra = hoje();
-                novaVenda.valorTotal += encontraPreco(id_produto) * quantidade_itens;
-                novaVenda.quantidadeItens += quantidade_itens;
-
-                novoItem.IdVenda = novaVenda.id;
-                strcpy(novoItem.CPF, cpf_venda);
-                novoItem.IdProduto = id_produto;
-                novoItem.Quantidade = quantidade_itens;
-                novoItem.Unitario = (encontraPreco(id_produto));
-                novoItem.Total = novaVenda.valorTotal;
-                GravaItemComprado_CSV(novoItem);
-                GravaVendas_CSV(novaVenda);
-                adicionarPontosClienteCPF(cpf_venda, novaVenda.valorTotal);
+                break;
             }
-            else {
-                printf("Não há quantidade disponível de produtos\n");
-            }
+            resultado = exibirProdutoNaVenda(id_produto);
+        } while (resultado == -1);
+        if (id_produto == 0)
+		{
+			break;
+		}
+        printf("Unidades: ");
+        scanf(" %d", &quantidade_itens);
+        if (encontraEstoque(id_produto) >= quantidade_itens)
+        {
+            diminuiEstoque(id_produto, quantidade_itens);
+
+            novaVenda.id = quantidadeVendasCSV() + 1;
+            for(int i =0; i < 14; i++)
+            {
+				novaVenda.CPF[i] = cpf_venda[i];
+			}
+            novaVenda.CPF[14] = '\0';
+            novaVenda.dataCompra = hoje();
+            novaVenda.valorTotal += encontraPreco(id_produto) * quantidade_itens;
+            novaVenda.quantidadeItens += quantidade_itens;
+
+            novoItem.IdVenda = novaVenda.id;
+            strcpy(novoItem.CPF, cpf_venda);
+            novoItem.IdProduto = id_produto;
+            novoItem.Quantidade = quantidade_itens;
+            novoItem.Unitario = (encontraPreco(id_produto));
+            novoItem.Total = novaVenda.valorTotal;
+            GravaItemComprado_CSV(novoItem);
+            GravaVendas_CSV(novaVenda);
+            adicionarPontosClienteCPF(cpf_venda, novaVenda.valorTotal);
         }
         else {
-            printf("Compra finalizada\n");
-            return 0;
+            printf("Não há quantidade disponível de produtos\n");
         }
     } while (id_produto != 0);
     printf("Compra finalizada\n");
+    system("pause");
     return 0;
+}
+
+int exibirProdutoNaVenda(int idBusca)
+{
+    int quantidade = quantidadeProdutosCSV();
+    PRODUTO* lista;
+    lista = (PRODUTO*)malloc(sizeof(PRODUTO) * quantidade);
+    lerProdutosCSV(lista);
+
+    for (int i = 0; i < quantidade; i++)
+    {
+        if (lista[i].id == idBusca)
+        {
+            printf("Nome: %s\n", lista[i].nome);
+            printf("Preço: R$%.2f\n", lista[i].preco);
+            printf("Estoque: %d\n", lista[i].estoque);
+            printf("\n");
+            free(lista);
+            return 0;
+        }
+    }
+    free(lista);
+    printf("Nenhum produto encontrado com este ID.");
+    system("pause");
+    return -1;
 }
